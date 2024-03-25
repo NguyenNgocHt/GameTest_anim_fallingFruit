@@ -1,5 +1,6 @@
 import { _decorator, Component, instantiate, Node, Prefab, Sprite, resources, SpriteFrame } from "cc";
 import { LoadScouce } from "./LoadScouce";
+import { FruitFalling } from "./FruitFalling";
 const { ccclass, property } = _decorator;
 enum FRUIT_NAME_STATUS {
   apple,
@@ -10,6 +11,14 @@ enum FRUIT_NAME_STATUS {
 }
 @ccclass("poolControler")
 export class poolControler extends Component {
+  private static _instance: poolControler = null!;
+  public static get instance(): poolControler {
+    if (this._instance == null) {
+      this._instance = new poolControler();
+    }
+
+    return this._instance;
+  }
   FRUIT_NAME: string[] = ["apple", "grapes", "orange", "pineapple", "strawberry"];
   @property(Prefab)
   fruitPrefab: Prefab = null;
@@ -37,7 +46,7 @@ export class poolControler extends Component {
     this.initPool_pineapples();
     this.initPool_strawberrys();
   }
-  initPool_fruit(fruitName: string, fruitList: Node[], fruitGroupNode: Node) {
+  initPool_fruit(fruitName: string, fruitList: Node[], fruitGroupNode: Node, indexIcon: FRUIT_NAME_STATUS) {
     if (this.fruitPrefab) {
       let nodePrefab = instantiate(this.fruitPrefab);
       if (nodePrefab) {
@@ -52,6 +61,10 @@ export class poolControler extends Component {
               console.log(`load popup background error: ${error}`);
             }
           });
+          let iconControler = nodePrefab.getComponent(FruitFalling);
+          if (iconControler) {
+            iconControler.setIndexIcon(indexIcon);
+          }
           fruitGroupNode.addChild(nodePrefab);
           nodePrefab.setPosition(0, 0);
           fruitList.push(nodePrefab);
@@ -62,35 +75,35 @@ export class poolControler extends Component {
   }
   initPool_apples() {
     for (let i = 0; i < this.numberFruit; i++) {
-      this.initPool_fruit(this.FRUIT_NAME[0], this.appleList, this.appleGroup);
+      this.initPool_fruit(this.FRUIT_NAME[0], this.appleList, this.appleGroup, FRUIT_NAME_STATUS.apple);
     }
     console.log(this.appleGroup);
     console.log(this.appleList);
   }
   initPool_oranges() {
     for (let i = 0; i < this.numberFruit; i++) {
-      this.initPool_fruit(this.FRUIT_NAME[2], this.orangesList, this.orangesGroup);
+      this.initPool_fruit(this.FRUIT_NAME[2], this.orangesList, this.orangesGroup, FRUIT_NAME_STATUS.orange);
     }
     console.log(this.orangesList);
     console.log(this.orangesGroup);
   }
   initPool_grapes() {
     for (let i = 0; i < this.numberFruit; i++) {
-      this.initPool_fruit(this.FRUIT_NAME[1], this.grapesList, this.grapesGroup);
+      this.initPool_fruit(this.FRUIT_NAME[1], this.grapesList, this.grapesGroup, FRUIT_NAME_STATUS.grapes);
     }
     console.log(this.grapesGroup);
     console.log(this.grapesList);
   }
   initPool_pineapples() {
     for (let i = 0; i < this.numberFruit; i++) {
-      this.initPool_fruit(this.FRUIT_NAME[3], this.pineappleList, this.pineapplesGroup);
+      this.initPool_fruit(this.FRUIT_NAME[3], this.pineappleList, this.pineapplesGroup, FRUIT_NAME_STATUS.pineapple);
     }
     console.log(this.pineappleList);
     console.log(this.pineapplesGroup);
   }
   initPool_strawberrys() {
     for (let i = 0; i < this.numberFruit; i++) {
-      this.initPool_fruit(this.FRUIT_NAME[4], this.strawberryList, this.strawberrysGroup);
+      this.initPool_fruit(this.FRUIT_NAME[4], this.strawberryList, this.strawberrysGroup, FRUIT_NAME_STATUS.strawberry);
     }
     console.log(this.strawberryList);
     console.log(this.strawberrysGroup);

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, PrivateNode } from "cc";
+import { _decorator, Component, Node } from "cc";
 import { poolControler } from "./poolControler";
 import { initFruit } from "./initFruit";
 const { ccclass, property } = _decorator;

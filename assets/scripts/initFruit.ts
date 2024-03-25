@@ -74,7 +74,7 @@ export class initFruit extends Component {
     let delayCot = 0.1;
     let delayHang = 0.6;
     let addHang = 0.1;
-    let addDelayCot = 0.2;
+    let addDelayCot = 0.3;
     let childs = this.fruitGroup1.children;
     console.log(childs);
     for (let i = 0; i < this.rowNumber; i++) {
@@ -100,7 +100,7 @@ export class initFruit extends Component {
     let delayCot = 0.1;
     let delayHang = 0.6;
     let addHang = 0.1;
-    let addDelayCot = 0.2;
+    let addDelayCot = 0.3;
     let childs = this.fruitGroup2.children;
     console.log(childs);
     for (let i = 0; i < this.rowNumber; i++) {

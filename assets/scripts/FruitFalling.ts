@@ -1,15 +1,22 @@
 import { _decorator, Component, Label, Node, tween, Tween, Vec3 } from "cc";
+import { poolControler } from "./poolControler";
 const { ccclass, property } = _decorator;
 enum FALLING_STATUS {
   NO_STATUS,
   START,
   STOP,
 }
+enum FRUIT_NAME_STATUS {
+  apple,
+  grapes,
+  orange,
+  pineapple,
+  strawberry,
+}
 @ccclass("FruitFalling")
 export class FruitFalling extends Component {
   @property(Label)
   labelCheck: Label = null;
-  private isFalling: boolean = false;
   speed2: number = 250;
   speed: number = 0.1;
   dx: number = 0;
@@ -18,18 +25,20 @@ export class FruitFalling extends Component {
   countFalling: number = 0;
   posTaget: Vec3 = new Vec3(0, 0, 0);
   fallingStatus: FALLING_STATUS = FALLING_STATUS.NO_STATUS;
+  indexIcon: FRUIT_NAME_STATUS;
+
   start() {}
   public setColumn(column: number) {
     this.column = column;
+  }
+  public setIndexIcon(indexStatus: FRUIT_NAME_STATUS) {
+    this.indexIcon = indexStatus;
   }
   public setPosTaget(posTaget: Vec3) {
     this.posTaget = posTaget;
   }
   public fruitFalling() {
     this.fallingStatus = FALLING_STATUS.START;
-    // let time = this.calculateDistance(this.node.getWorldPosition(), this.posTaget) / this.speed;
-    // Tween.stopAllByTarget(this.node);
-    // tween(this.node).to(time, { worldPosition: this.posTaget }).start();
   }
   movingBytween() {
     let time = this.calculateDistance(this.node.getWorldPosition(), this.posTaget) / this.speed2;
@@ -60,6 +69,7 @@ export class FruitFalling extends Component {
       this.fallingStatus = FALLING_STATUS.STOP;
       this.countFalling = 0;
       this.speed = 0;
+      poolControler.instance.pushIconNode(this.indexIcon, this.node);
     }
   }
 }
