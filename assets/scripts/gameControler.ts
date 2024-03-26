@@ -51,7 +51,7 @@ export class gameControler extends Component {
     fruitGroupControl.iconFalling_1();
     this.scheduleOnce(function () {
       fruitGroupControl.iconFalling_2();
-    }, 1.5);
+    }, 0.5);
   }
   RandomNumber(minNumber: number, maxNumber: number): number {
     return Math.floor(Math.random() * maxNumber) + minNumber;
